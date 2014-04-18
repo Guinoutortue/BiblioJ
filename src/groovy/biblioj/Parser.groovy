@@ -16,7 +16,7 @@ class Parser {
 			   ).save(failOnError: true, flush: true)	
 			   
 			   String rowAuteur = row[4]
-			   println ""
+			   println "\n"
 			   println rowAuteur
 			   if(rowAuteur!=null) {
 				   String[] rowNom =  rowAuteur.split("[,]")
@@ -24,7 +24,7 @@ class Parser {
 				   boolean nomEtPrenom = rowNom.size()==2
 				   println rowNom.size()
 				   
-				   auteur = Auteur.findByNom(rowNom[0]).each{ a ->
+				   auteur = Auteur.findAllByNom(rowNom[0]).each { a ->
 					   println nomEtPrenom
 					   if(nomEtPrenom) {
 						   a.findByPrenom(rowNom[1]) ?: new Auteur(
@@ -40,6 +40,7 @@ class Parser {
 							   ).save(failOnError: true, flush: true)
 					   }
 					}
+				   println auteur
 			   }
 			} else {
 				model=true;
