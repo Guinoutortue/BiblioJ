@@ -8,13 +8,32 @@ class LivreController {
 
     def index() {
         redirect(action: "list", params: params)
+		//RecuperationLivre recupLivre
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 5, 100)
         [livreInstanceList: Livre.list(params), livreInstanceTotal: Livre.count()]
     }
+	
+	def listeLigne(long id) {
 
+		if(params.offset == null) {
+			params.offset = 0
+		}
+		def result
+		if(!params["typedoc"].equals("") && params["typedoc"] !=  null) {
+			result = (recupLivre.getByType(params["typedoc"]))
+		}
+		if(!params["titre"].equals("") && params["titre"] !=  null) {
+			result = (recupLivre.getByTitre(params["titre"]))
+		}
+		if(!params["nom"].equals("") && params["nom"] !=  null) {
+			result = (recupLivre.getByNom(params["nom"]))
+		}
+	}
+	
+	
     def create() {
         [livreInstance: new Livre(params)]
     }
