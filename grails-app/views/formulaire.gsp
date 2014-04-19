@@ -8,11 +8,11 @@
 	
 	<div id="page-body" role="main">
 			<h1>Rechercher Livre:</h1>
-			<g:form  url="[action:'listeLivre',controller:'Livre']" >
+			<g:form  url="[action:'formulaire',controller:'Livre']" >
 				Titre:<g:textField name="titre"/>
 				Auteur:<g:textField name="nom"/>
 				Type:<g:textField name="typedoc"/>
-				<g:submitButton name="list" class="list" value="Rechercher" />
+				<g:submitButton name="livrelist" class="livrelist" value="Rechercher" />
 			</g:form>
 	</div>
 	

@@ -108,6 +108,14 @@
 			   this is the default page, feel free to modify it to either redirect to a controller or display whatever
 			   content you may choose. Below is a list of controllers that are currently deployed in this application,
 			   click on each to execute its default action:</p>
+			   
+			   <h1>Rechercher Livre:</h1>
+			<g:form  url="[action:'formulaire',controller:'Livre']" >
+				Titre:<g:textField name="titre"/><br />
+				Auteur:<g:textField name="nom"/><br />
+				Type:<g:textField name="typedoc"/><br />
+				<g:submitButton name="livrelist" class="livrelist" value="Rechercher" />
+			</g:form>
 
 			<div id="controller-list" role="navigation">
 				<h2>Available Controllers:</h2>

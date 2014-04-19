@@ -1,14 +1,18 @@
 package biblioj
 
+
 import org.springframework.dao.DataIntegrityViolationException
 
 class LivreController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
+	RecuperationLivreService recupLivre
+	
+	
     def index() {
+		recupLivre = new RecuperationLivreService()
         redirect(action: "list", params: params)
-		//RecuperationLivre recupLivre
+		
     }
 
     def list(Integer max) {
@@ -16,22 +20,53 @@ class LivreController {
         [livreInstanceList: Livre.list(params), livreInstanceTotal: Livre.count()]
     }
 	
-	def listeLigne(long id) {
+	def livrelist(Integer max) {
+		params.max = Math.min(max ?: 5, 100)
+		[livreInstanceList: Livre.list(params), livreInstanceTotal: Livre.count()]
+	}
+	
+	
+	def formulaire(long id) {
 
 		if(params.offset == null) {
 			params.offset = 0
 		}
-		def result
-		if(!params["typedoc"].equals("") && params["typedoc"] !=  null) {
-			result = (recupLivre.getByType(params["typedoc"]))
-		}
+		recupLivre = new RecuperationLivreService()
+		ArrayList result
+		
 		if(!params["titre"].equals("") && params["titre"] !=  null) {
-			result = (recupLivre.getByTitre(params["titre"]))
+			if(result == null) {
+				println(params["titre"])
+				result = recupLivre.getByTitre("%"+ (params["titre"]) +"%")
+				println(result)
+				}
+			else {
+				result.addAll(recupLivre.getByTitre("%"+params["titre"]+"%"))
+				}
 		}
+		
 		if(!params["nom"].equals("") && params["nom"] !=  null) {
-			result = (recupLivre.getByNom(params["nom"]))
+			if(result == null) {
+				result = recupLivre.getByNom("%"+params["nom"]+"%")
+				}
+			else {
+				result.addAll(recupLivre.getByNom("%"+params["nom"]+"%"))
+				}
+		
 		}
+		
+		if(!params["typedoc"].equals("") && params["typedoc"] !=  null) {
+			if(result == null) {
+				result = recupLivre.getByType(params["typedoc"])
+				}
+			else {
+				result.addAll(recupLivre.getByType(params["typedoc"]))
+				}
+		}	
+		redirect(action: "livrelist")
+		return
 	}
+
 	
 	
     def create() {
