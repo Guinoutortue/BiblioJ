@@ -18,3 +18,11 @@
 	<g:datePicker name="dateReservation" precision="day"  value="${reservationInstance?.dateReservation}"  />
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: reservationInstance, field: 'livres', 'error')} ">
+	<label for="livres">
+		<g:message code="reservation.livres.label" default="Livres" />
+		
+	</label>
+	
+</div>
+

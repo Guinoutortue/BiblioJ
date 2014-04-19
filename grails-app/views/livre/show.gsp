@@ -50,6 +50,37 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${livreInstance?.auteurs}">
+				<li class="fieldcontain">
+					<span id="auteurs-label" class="property-label"><g:message code="livre.auteurs.label" default="Auteurs" /></span>
+					
+						<g:each in="${livreInstance.auteurs}" var="a">
+						<span class="property-value" aria-labelledby="auteurs-label"><g:link controller="auteur" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${livreInstance?.reservations}">
+				<li class="fieldcontain">
+					<span id="reservations-label" class="property-label"><g:message code="livre.reservations.label" default="Reservations" /></span>
+					
+						<g:each in="${livreInstance.reservations}" var="r">
+						<span class="property-value" aria-labelledby="reservations-label"><g:link controller="reservation" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${livreInstance?.typeDocument}">
+				<li class="fieldcontain">
+					<span id="typeDocument-label" class="property-label"><g:message code="livre.typeDocument.label" default="Type Document" /></span>
+					
+						<span class="property-value" aria-labelledby="typeDocument-label"><g:link controller="typeDocument" action="show" id="${livreInstance?.typeDocument?.id}">${livreInstance?.typeDocument?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

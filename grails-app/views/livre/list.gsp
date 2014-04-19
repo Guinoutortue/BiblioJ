@@ -30,6 +30,8 @@
 					
 						<g:sortableColumn property="nombreExemplairesDisponibles" title="${message(code: 'livre.nombreExemplairesDisponibles.label', default: 'Nombre Exemplaires Disponibles')}" />
 					
+						<th><g:message code="livre.typeDocument.label" default="Type Document" /></th>
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -41,6 +43,8 @@
 						<td>${fieldValue(bean: livreInstance, field: "nombreExemplaires")}</td>
 					
 						<td>${fieldValue(bean: livreInstance, field: "nombreExemplairesDisponibles")}</td>
+					
+						<td>${fieldValue(bean: livreInstance, field: "typeDocument")}</td>
 					
 					</tr>
 				</g:each>

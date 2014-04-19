@@ -41,6 +41,17 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${auteurInstance?.livres}">
+				<li class="fieldcontain">
+					<span id="livres-label" class="property-label"><g:message code="auteur.livres.label" default="Livres" /></span>
+					
+						<g:each in="${auteurInstance.livres}" var="l">
+						<span class="property-value" aria-labelledby="livres-label"><g:link controller="livre" action="show" id="${l.id}">${l?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

@@ -18,3 +18,11 @@
 	<g:textField name="prenom" value="${auteurInstance?.prenom}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: auteurInstance, field: 'livres', 'error')} ">
+	<label for="livres">
+		<g:message code="auteur.livres.label" default="Livres" />
+		
+	</label>
+	<g:select name="livres" from="${biblioj.Livre.list()}" multiple="multiple" optionKey="id" size="5" value="${auteurInstance?.livres*.id}" class="many-to-many"/>
+</div>
+
