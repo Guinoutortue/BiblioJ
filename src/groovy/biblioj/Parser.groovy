@@ -6,15 +6,24 @@ class Parser {
 		def csv = new File("grails-app/conf/Les 1000 titres les plus recherches en 2012.csv")
 		def livre
 		def auteur
+		def typedoc
 		def model=false; // pour ne pas traiter la première ligne
 		csv.splitEachLine(';') { row ->
+			
 			if(model){
+				//************
+				 //	Livre
+				 //************
 				livre = Livre.findByTitre(row[3]) ?: new Livre(
 				  titre: row[3],
 				  nombreExemplaires: 3,
 				  nombreExemplairesDisponibles: 3
 			   ).save(failOnError: true, flush: true)	
+			
 			   
+			   //************
+				//	Auteur
+				//************
 			   String rowAuteur = row[4]
 			   
 			   if(rowAuteur!=null) {
@@ -34,9 +43,20 @@ class Parser {
 						   ).save(failOnError: true, flush: true)
 				   }
 				   
-				   //Livre.findByTitre(row[3]).addToAuteurs(Auteur.findByNomAndPrenom(rowNom[0],rowNom[1]))
+				   livre.addToAuteurs(auteur).save(flush: true)
 			   }
 			   
+			   //************
+				//	Type
+				//************
+			   typedoc = TypeDocument.findByIntitule(row[1]) ?: new TypeDocument(
+				   intitule: row[1] 
+				).save(failOnError: true, flush: true)
+			   
+				if(typedoc!=null) {
+					livre.typeDocument=typedoc
+				}
+				
 			} else {
 				model=true;
 			}
