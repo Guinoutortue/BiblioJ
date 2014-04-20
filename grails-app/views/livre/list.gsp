@@ -15,9 +15,9 @@
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		<g:include controller="panier" action="showLivres"/>
 		<g:if test="${panierLivre != 0}">
 			<div id="status" role="complementary">
-				Liste des livres dans le panier<br/>
 				<% ArrayList<Livre> listeLivrePanier = new ArrayList<Livre>() %>
 				<table>
 					<g:each in="${panierList}" status="i" var="livreInstance">

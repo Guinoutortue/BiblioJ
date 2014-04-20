@@ -16,7 +16,7 @@ class PanierControllerTests {
     }
 
     void testIndex() {
-        controller.index()
+        controller.connexion()
         assert "/panier/list" == response.redirectedUrl
     }
 

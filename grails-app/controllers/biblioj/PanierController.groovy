@@ -6,8 +6,12 @@ class PanierController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
-    def index() {
-        //redirect(action: "list", params: params)
+	def index() {
+		redirect(action: "list", params: params)
+	}
+	
+    def connexion() {
+        
     }
 
 	def login() {
@@ -20,12 +24,12 @@ class PanierController {
 				username: session.user
 			 ).save(flush: true)
 			println panierres
-		redirect(action: 'index')
+		redirect(uri: '/')
 	}
 	
 	def logout() {
 		session.user =null
-		redirect(action: 'index')
+		redirect(uri: '/')
 	}
 	
 	def ajouter() {
@@ -68,6 +72,20 @@ class PanierController {
 
         [panierInstance: panierInstance]
     }
+	
+	def showLivres() {
+		def listeLivres
+		if(session.user!=null) {
+			listeLivres += "<div>Vous-êtes connecté en temps que : "+session.user+"</div><a href='/BiblioJ/panier/connexion'>Deconnexion</a>"
+			listeLivres += "<div>"
+			Panier.findByUsername(session.user).getMeslivres().each { l -> listeLivres = listeLivres + "<br/>" +l.getTitre()}
+			listeLivres += "</div>"
+		} else {
+			listeLivres = "<div><p>Connectez-vous pour voir votre panier :)<p><br/><a href='/BiblioJ/panier/connexion'>Connexion</a></div>"
+		}
+		
+		[message: listeLivres]
+	}
 
     def edit(Long id) {
         def panierInstance = Panier.get(id)
