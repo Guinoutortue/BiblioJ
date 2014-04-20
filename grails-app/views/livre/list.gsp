@@ -64,8 +64,8 @@
 						<td>${fieldValue(bean: livreInstance, field: "typeDocument")}</td>
 						
 						<td><g:form url="[action:'ajouter',controller:'Panier']" >
-							<g:hiddenField name="cache" value="${livreInstanceList.titre}"/>
-							<g:submitButton name="list" id="${livreInstanceList.titre}" class="list" value="Ajouter au panier" />
+							<g:hiddenField name="cache" value="${livreInstance.titre}"/>
+							<g:submitButton name="list" id="${livreInstance.titre}" class="list" value="Ajouter au panier" />
 						</g:form></td>
 						
 					</tr>

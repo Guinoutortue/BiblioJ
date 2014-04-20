@@ -29,7 +29,8 @@ class PanierController {
 	}
 	
 	def ajouter() {
-		def l = Livre.findByTitre(params["titre"])
+		println params
+		def l = Livre.findByTitre(params.cache)
 		println l
 		Panier.findByUsername(session.user).addToMeslivres(l)
 		redirect(action: 'list', controller: 'Livre')
