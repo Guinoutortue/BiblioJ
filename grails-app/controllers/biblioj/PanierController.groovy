@@ -40,6 +40,13 @@ class PanierController {
 		redirect(action: 'list', controller: 'Livre')
 	}
 	
+	def retirer(){
+		def l = Livre.findByTitre(params.cache)
+		println l
+		Panier.findByUsername(session.user).removeToMeslivres(l)
+		redirect(action: 'list', controller: 'Livre')
+	}
+	
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         [panierInstanceList: Panier.list(params), panierInstanceTotal: Panier.count()]
@@ -78,7 +85,14 @@ class PanierController {
 		if(session.user!=null) {
 			listeLivres += "<div>Vous-êtes connecté en temps que : "+session.user+"</div><a href='/BiblioJ/panier/connexion'>Deconnexion</a>"
 			listeLivres += "<div>"
-			Panier.findByUsername(session.user).getMeslivres().each { l -> listeLivres = listeLivres + "<br/>" +l.getTitre()}
+			Panier.findByUsername(session.user).getMeslivres().each { l -> listeLivres +=
+						 """
+						<g:form url=   | [action:'retirer',controller:'Panier']  | > 
+                        | <g:hiddenField name= | cache | value= | ${livreInstance.titre} | /> 
+                        | <g:submitButton name= | list   |  id= | ${livreInstance.titre} | class= | list
+                        | value= | Retirer du panier | /> | </g:form>
+                        | <br/>""".stripMargin() + l.getTitre() }
+			
 			listeLivres += "</div>"
 		} else {
 			listeLivres = "<div><p>Connectez-vous pour voir votre panier :)<p><br/><a href='/BiblioJ/panier/connexion'>Connexion</a></div>"

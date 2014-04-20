@@ -16,21 +16,7 @@
 			</ul>
 		</div>
 		<g:include controller="panier" action="showLivres"/>
-		<g:if test="${panierLivre != 0}">
-			<div id="status" role="complementary">
-				<% ArrayList<Livre> listeLivrePanier = new ArrayList<Livre>() %>
-				<table>
-					<g:each in="${panierList}" status="i" var="livreInstance">
-						<tr>
-							<td>
-								${fieldValue(bean: livreInstance, field: "titre")} 
-							</td>	
-						</tr>
-						<!-- <% listeLivrePanier.add(livreInstance.titre) %> -->			
-					</g:each>
-				</table>
-			</div>
-		</g:if>
+		
 		<div id="list-livre" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -64,8 +50,10 @@
 						<td>${fieldValue(bean: livreInstance, field: "typeDocument")}</td>
 						
 						<td><g:form url="[action:'ajouter',controller:'Panier']" >
-							<g:hiddenField name="cache" value="${livreInstance.titre}"/>
-							<g:submitButton name="list" id="${livreInstance.titre}" class="list" value="Ajouter au panier" />
+							<g:if test="${livreInstance.nombreExemplairesDisponibles > 0}">
+								<g:hiddenField name="cache" value="${livreInstance.titre}"/>
+								<g:submitButton name="list" id="${livreInstance.titre}" class="list" value="Ajouter au panier" />
+							</g:if>
 						</g:form></td>
 						
 					</tr>
