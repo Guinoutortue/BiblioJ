@@ -110,7 +110,7 @@
 			   click on each to execute its default action:</p>
 			   
 			   <h1>Rechercher Livre:</h1>
-			<g:form  url="[action:'formulaire',controller:'Livre']" >
+			<g:form  url="[action:'livrelist',controller:'Livre']" >
 				Titre:<g:textField name="titre"/><br />
 				Auteur:<g:textField name="nom"/><br />
 				Type:<g:textField name="typedoc"/><br />

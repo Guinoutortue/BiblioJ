@@ -16,23 +16,43 @@ class LivreController {
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 5, 100)
-        [livreInstanceList: Livre.list(params), livreInstanceTotal: Livre.count()]
+		params.max = Math.min(max ?: 5, 100)
+		[livreFormulaire: Livre.livrelist(params), livreInstanceTotal: Livre.count()]
+		
     }
 	
 	def livrelist(Integer max) {
-		params.max = Math.min(max ?: 5, 100)
-		[livreInstanceList: Livre.list(params), livreInstanceTotal: Livre.count()]
+
+		recupLivre = new RecuperationLivreService()
+		def resultTitre = new ArrayList<Livre>()
+		def resultNom = new ArrayList<Livre>()
+		def resultType = new ArrayList<Livre>()
+		
+		if(!params["titre"].equals("") && params["titre"] !=  null) {
+				resultTitre = recupLivre.getByTitre("%"+ (params["titre"]) +"%")
+				}
+		
+		if(!params["nom"].equals("") && params["nom"] !=  null) {
+				resultNom = recupLivre.getByNom("%"+params["nom"]+"%")
+		}
+		
+		if(!params["typedoc"].equals("") && params["typedoc"] !=  null) {
+				resultType = recupLivre.getByType(params["typedoc"])
+		}
+
+		[livreInstanceList: resultNom, livreInstanceTotal: resultNom.size()]
+		
+		
 	}
 	
-	
-	def formulaire(long id) {
+	/*
+	def formulaire() {
 
 		if(params.offset == null) {
 			params.offset = 0
 		}
 		recupLivre = new RecuperationLivreService()
-		ArrayList result
+		def result = new ArrayList<Livre>()
 		
 		if(!params["titre"].equals("") && params["titre"] !=  null) {
 			if(result == null) {
@@ -42,15 +62,18 @@ class LivreController {
 				}
 			else {
 				result.addAll(recupLivre.getByTitre("%"+params["titre"]+"%"))
+				println(result)
 				}
 		}
 		
 		if(!params["nom"].equals("") && params["nom"] !=  null) {
 			if(result == null) {
 				result = recupLivre.getByNom("%"+params["nom"]+"%")
+				println(result)
 				}
 			else {
 				result.addAll(recupLivre.getByNom("%"+params["nom"]+"%"))
+				println(result)
 				}
 		
 		}
@@ -58,15 +81,19 @@ class LivreController {
 		if(!params["typedoc"].equals("") && params["typedoc"] !=  null) {
 			if(result == null) {
 				result = recupLivre.getByType(params["typedoc"])
+				println(result)
 				}
 			else {
 				result.addAll(recupLivre.getByType(params["typedoc"]))
+				println(result)
 				}
-		}	
-		redirect(action: "livrelist")
+		}
+		println("\n\n\n")
+		println(result)	
+		redirect(action: "livrelist", params: params)
 		return
 	}
-
+	*/
 	
 	
     def create() {
