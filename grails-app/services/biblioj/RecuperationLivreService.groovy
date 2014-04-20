@@ -28,4 +28,14 @@ class RecuperationLivreService {
 			return result
 
 	}
+	
+	Panier getPanier() {
+		return null
+	}
+	
+	def ajouterPanier(String titre) {
+		Panier monPanier = new ArrayList<Livre>()
+		def livreAAjouter = Livre.findByTitre(titre)
+		monPanier.add(livreAAjouter).save()
+	}
 }

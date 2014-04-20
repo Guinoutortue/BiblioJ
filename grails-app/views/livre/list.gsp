@@ -15,6 +15,22 @@
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		<g:if test="${panierLivre != 0}">
+			<div id="status" role="complementary">
+				Liste des livres dans le panier<br/>
+				<% ArrayList<Livre> listeLivrePanier = new ArrayList<Livre>() %>
+				<table>
+					<g:each in="${panierList}" status="i" var="livreInstance">
+						<tr>
+							<td>
+								${fieldValue(bean: livreInstance, field: "titre")} 
+							</td>	
+						</tr>
+						<!-- <% listeLivrePanier.add(livreInstance.titre) %> -->			
+					</g:each>
+				</table>
+			</div>
+		</g:if>
 		<div id="list-livre" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -29,9 +45,10 @@
 						<g:sortableColumn property="nombreExemplaires" title="${message(code: 'livre.nombreExemplaires.label', default: 'Nombre Exemplaires')}" />
 					
 						<g:sortableColumn property="nombreExemplairesDisponibles" title="${message(code: 'livre.nombreExemplairesDisponibles.label', default: 'Nombre Exemplaires Disponibles')}" />
-					
+						
 						<th><g:message code="livre.typeDocument.label" default="Type Document" /></th>
 					
+						<g:sortableColumn property="Action" title="Action" />
 					</tr>
 				</thead>
 				<tbody>
@@ -45,6 +62,13 @@
 						<td>${fieldValue(bean: livreInstance, field: "nombreExemplairesDisponibles")}</td>
 					
 						<td>${fieldValue(bean: livreInstance, field: "typeDocument")}</td>
+						
+						<g:if test="${livreInstanceList.nombreExemplairesDisponibles != 0}">
+							<td><g:form url="[action:'ajouter',controller:'Panier']" >
+								<g:hiddenField name="cache" value="${livreInstanceList.titre}"/>
+								<g:submitButton name="list" id="${livreInstanceList.titre}" class="list" value="Ajouter au panier" />
+							</g:form></td>
+						</g:if>
 					
 					</tr>
 				</g:each>

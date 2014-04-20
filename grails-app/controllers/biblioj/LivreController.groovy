@@ -17,8 +17,10 @@ class LivreController {
 	}
 
 	def list(Integer max) {
+		
+		
 		params.max = Math.min(max ?: 10, 100)
-		[livreInstanceList: Livre.list(params), livreInstanceTotal: Livre.count()]
+		[livreInstanceList: Livre.list(params), livreInstanceTotal: Livre.count(),panierInstanceList:panier, panierInstanceTotal: session["panierLivre"].size()]
 	}
 
 	def livrelist(Integer max) {
@@ -65,7 +67,8 @@ class LivreController {
 			result=resultNom
 			result.retainAll(resultTitre)
 			result.retainAll(resultType)
-		}		
+		}
+		
 		params.max = Math.min(max ?: 5, 100)
 		[livreInstanceList: result, livreInstanceTotal: result.size()]
 	}

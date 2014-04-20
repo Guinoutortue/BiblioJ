@@ -104,10 +104,23 @@
 		</div>
 		<div id="page-body" role="main">
 			<h1>Welcome to Grails</h1>
-			<p>Congratulations, you have successfully started your first Grails application! At the moment
-			   this is the default page, feel free to modify it to either redirect to a controller or display whatever
-			   content you may choose. Below is a list of controllers that are currently deployed in this application,
-			   click on each to execute its default action:</p>
+			
+			<g:if test="${panierLivre != 0}">
+			<div id="status" role="complementary">
+				Liste des livres dans le panier<br/>
+				<% ArrayList<Livre> listeLivrePanier = new ArrayList<Livre>() %>
+				<table>
+					<g:each in="${panierList}" status="i" var="livreInstance">
+						<tr>
+							<td>
+								${fieldValue(bean: livreInstance, field: "titre")} 
+							</td>	
+						</tr>
+						<!-- <% listeLivrePanier.add(livreInstance.titre) %> -->			
+					</g:each>
+				</table>
+			</div>
+		</g:if>
 			   
 			   <h1>Rechercher Livre:</h1>
 			<g:form  url="[action:'livrelist',controller:'Livre']" >
