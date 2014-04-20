@@ -11,18 +11,28 @@ class PanierController {
     }
 
 	def login() {
-		if(params.username == "admin" &params.password == "pass") {
+		
 			flash.message ="login succeed"
-			session.user = "admin"
-		} else {
-			flash.message = "login failed"
-		}
+			session.user = params.username
+			println session.user
+			HashSet<Livre> hs = new HashSet<Livre>()
+			def panierres = Panier.findByUsername(session.user) ?: new Panier(
+				username: session.user
+			 ).save(flush: true)
+			println panierres
 		redirect(action: 'index')
 	}
 	
 	def logout() {
 		session.user =null
 		redirect(action: 'index')
+	}
+	
+	def ajouter() {
+		def l = Livre.findByTitre(params["titre"])
+		println l
+		Panier.findByUsername(session.user).addToMeslivres(l)
+		redirect(action: 'list', controller: 'Livre')
 	}
 	
     def list(Integer max) {

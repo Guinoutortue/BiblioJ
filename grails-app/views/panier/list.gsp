@@ -23,13 +23,14 @@
 			<table>
 				<thead>
 					<tr>
+						<g:sortableColumn property="username" title="${message(code: 'panier.username.label', default: 'Username	')}" />
 					
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${panierInstanceList}" status="i" var="panierInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
+						<td><g:link action="show" id="${panierInstance.id}">${fieldValue(bean: panierInstance, field: "username")}</g:link></td>
 					</tr>
 				</g:each>
 				</tbody>

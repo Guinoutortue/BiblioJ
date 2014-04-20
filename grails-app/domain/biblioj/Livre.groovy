@@ -6,6 +6,7 @@ class Livre {
 	int nombreExemplaires
 	int nombreExemplairesDisponibles
 	static hasMany = [auteurs : Auteur, reservations: Reservation]
+	static belongsTo = [Panier]
 	TypeDocument typeDocument
 	
 	

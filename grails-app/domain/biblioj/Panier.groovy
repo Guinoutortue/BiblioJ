@@ -1,9 +1,11 @@
 package biblioj
 
 class Panier {
-	ArrayList<Livre> mesLivres
+	static hasMany = [meslivres: Livre]
+	String username
 	
     static constraints = {
-		mesLivres nullable:true 
+		meslivres nullable:true 
+		username nullable:false
     }
 }

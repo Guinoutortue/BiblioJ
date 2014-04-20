@@ -105,22 +105,6 @@
 		<div id="page-body" role="main">
 			<h1>Welcome to Grails</h1>
 			
-			<g:if test="${panierLivre != 0}">
-			<div id="status" role="complementary">
-				Liste des livres dans le panier<br/>
-				<% ArrayList<Livre> listeLivrePanier = new ArrayList<Livre>() %>
-				<table>
-					<g:each in="${panierList}" status="i" var="livreInstance">
-						<tr>
-							<td>
-								${fieldValue(bean: livreInstance, field: "titre")} 
-							</td>	
-						</tr>
-						<!-- <% listeLivrePanier.add(livreInstance.titre) %> -->			
-					</g:each>
-				</table>
-			</div>
-		</g:if>
 			   
 			   <h1>Rechercher Livre:</h1>
 			<g:form  url="[action:'livrelist',controller:'Livre']" >

@@ -63,13 +63,11 @@
 					
 						<td>${fieldValue(bean: livreInstance, field: "typeDocument")}</td>
 						
-						<g:if test="${livreInstanceList.nombreExemplairesDisponibles != 0}">
-							<td><g:form url="[action:'ajouter',controller:'Panier']" >
-								<g:hiddenField name="cache" value="${livreInstanceList.titre}"/>
-								<g:submitButton name="list" id="${livreInstanceList.titre}" class="list" value="Ajouter au panier" />
-							</g:form></td>
-						</g:if>
-					
+						<td><g:form url="[action:'ajouter',controller:'Panier']" >
+							<g:hiddenField name="cache" value="${livreInstanceList.titre}"/>
+							<g:submitButton name="list" id="${livreInstanceList.titre}" class="list" value="Ajouter au panier" />
+						</g:form></td>
+						
 					</tr>
 				</g:each>
 				</tbody>

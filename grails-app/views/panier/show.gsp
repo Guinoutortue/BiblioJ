@@ -22,7 +22,24 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list panier">
-			
+				<g:if test="${panierInstance?.username}">
+				<li class="fieldcontain">
+					<span id="username-label" class="property-label"><g:message code="panier.username.label" default="Username" /></span>
+					
+						<span class="property-value" aria-labelledby="username-label"><g:fieldValue bean="${panierInstance}" field="username"/></span>
+					
+				</li>
+				</g:if>			
+				<g:if test="${panierInstance?.meslivres}">
+					<li class="fieldcontain">
+						<span id="meslivres-label" class="property-label"><g:message code="panier.meslivres.label" default="Meslivres" /></span>
+					
+							<g:each in="${panierInstance.meslivres}" var="r">
+							<span class="property-value" aria-labelledby="meslivres-label"><g:link controller="livre" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
+							</g:each>
+						
+					</li>
+				</g:if>
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

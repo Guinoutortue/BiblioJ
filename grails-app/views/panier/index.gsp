@@ -22,7 +22,6 @@
 			<g:form action="login" style="padding-left:200px">
 				<div style="width:220px">
 					<label>Name:</label><input type="text" name="username"/><br/>
-					<label>Password:</label><input type="password" name="password"/><br/>
 					<label>&nbsp;</label><input type="submit" value="login"/>
 				</div>
 			</g:form>
