@@ -4,7 +4,7 @@ class BootStrap {
 
     def init = { 
 		
-		RecuperationLivre rl = new RecuperationLivre()
+		RecuperationLivreService rl = new RecuperationLivreService()
 		def result
 		Parser.parserCSV();
 		
