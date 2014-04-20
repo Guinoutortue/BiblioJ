@@ -1,4 +1,3 @@
-
 <%@ page import="biblioj.Livre" %>
 <!DOCTYPE html>
 <html>
@@ -59,7 +58,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate controller="livrelist" action="list" total="${livreInstanceTotal}" max="5" />
+				<g:paginate total="${livreInstanceTotal}"  />
 			</div>
 		</div>
 	</body>

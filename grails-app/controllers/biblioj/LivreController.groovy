@@ -69,7 +69,7 @@ class LivreController {
 			result.retainAll(resultType)
 		}
 		
-		params.max = Math.min(max ?: 5, 100)
+		params.max = Math.min(max ?: 10, 100)
 		[livreInstanceList: result, livreInstanceTotal: result.size()]
 	}
 
