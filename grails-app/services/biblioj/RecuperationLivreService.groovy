@@ -11,19 +11,19 @@ class RecuperationLivreService {
 	
 	def getByNom(String nom) {
 		def result = new ArrayList<Livre>()
-		Auteur auteur = Auteur.findByNomLike(nom)
+		def auteurs = Auteur.findAllByNomLike(nom)
 
-		for (int i=0; i<(auteur.livres.size()); i++) {
-			Livre livre = auteur.livres.toList().get(i)
-			result.add(livre)
+		auteurs.each { auteur ->
+			result = result + auteur.livres
 		}
-		return result
 		
+		
+		return result
 	}
 	
 	def getByType(String t) {
 		def result = new ArrayList<Livre>()
-		TypeDocument l = TypeDocument.findByIntitule(t)
+		TypeDocument l = TypeDocument.findByIntituleLike(t)
 		result = Livre.findAllByTypeDocument(l)
 			return result
 

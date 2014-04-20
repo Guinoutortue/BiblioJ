@@ -13,15 +13,17 @@ class BootStrap {
 		result = rl.getByTitre("%rien%")
 		println("\n\n\n")
 		println(result)
+		println(result.size())
 		
-		result = rl.getByNom('%ber%')
+		result = rl.getByNom('%Collins%')
 		println("\n\n\n")
 		println(result)
+		println(result.size())
 
 		result = rl.getByType('Livre ado')
 		println("\n\n\n")
 		println(result)
-		
+		println(result.size())
     }
     def destroy = {
     }
