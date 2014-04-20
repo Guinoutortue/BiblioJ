@@ -2,10 +2,12 @@ package biblioj
 
 class Livre {
 	String titre
+	Set auteurs = new HashSet()
 	int nombreExemplaires
 	int nombreExemplairesDisponibles
 	static hasMany = [auteurs : Auteur, reservations: Reservation]
 	TypeDocument typeDocument
+	
 	
 	static constraints = {
 		titre nullable:false

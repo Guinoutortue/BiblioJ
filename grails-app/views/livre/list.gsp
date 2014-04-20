@@ -51,7 +51,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${livreInstanceTotal}" />
+				<g:paginate controller="list" action="list" total="${livreInstanceTotal}" max="5" />
 			</div>
 		</div>
 	</body>

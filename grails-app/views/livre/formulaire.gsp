@@ -12,11 +12,9 @@
 				Titre:<g:textField name="titre"/>
 				Auteur:<g:textField name="nom"/>
 				Type:<g:textField name="typedoc"/>
-				<g:submitButton name="livrelist" class="livrelist" value="Rechercher" />
+				<g:submitButton name="formulaire" class="formulaire" value="Rechercher" />
 			</g:form>
 	</div>
-	
-	
 	
 	</body>
 </html>
