@@ -7,15 +7,32 @@ class PanierController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
     def index() {
-        redirect(action: "list", params: params)
+        //redirect(action: "list", params: params)
     }
 
+	def login() {
+		if(params.username == "admin" &params.password == "pass") {
+			flash.message ="login succeed"
+			session.user = "admin"
+		} else {
+			flash.message = "login failed"
+		}
+		redirect(action: 'index')
+	}
+	
+	def logout() {
+		session.user =null
+		redirect(action: 'index')
+	}
+	
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         [panierInstanceList: Panier.list(params), panierInstanceTotal: Panier.count()]
     }
 
     def create() {
+		def user = session["user"]
+		session["user"] = "John"
         [panierInstance: new Panier(params)]
     }
 

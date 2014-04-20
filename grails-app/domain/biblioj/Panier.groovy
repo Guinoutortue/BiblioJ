@@ -1,7 +1,7 @@
 package biblioj
 
 class Panier {
-	ArrayList mesLivres
+	ArrayList<Livre> mesLivres
 	
     static constraints = {
 		mesLivres nullable:true 
