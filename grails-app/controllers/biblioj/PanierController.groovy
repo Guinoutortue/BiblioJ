@@ -89,10 +89,13 @@ class PanierController {
 	def showLivres() {
 		def listeLivres
 		if(session.user!=null) {
-			listeLivres += "<div>Vous-êtes connecté en temps que : "+session.user+"</div><a href='/BiblioJ/panier/connexion'>Deconnexion</a>"
-			listeLivres += "<div>"
+			listeLivres += "<div>Vous-etes connecte en temps que : "+session.user+"</div><a href='/BiblioJ/panier/connexion'>Deconnexion</a>"
+			listeLivres += "<div id=\"list-livre\" >"
+			listeLivres += "<table>"
 			Panier.findByUsername(session.user).getMeslivres().each { l ->
+				listeLivres += "<tr><td>"
 				listeLivres += l.getTitre()
+				listeLivres += "</td>"
 				listeLivres += "<td><form action=\"/BiblioJ/panier/retirer\" method=\"post\">"
 				listeLivres += "<input type=\"hidden\" name=\"cache\" value=\""
 				listeLivres += l.getTitre()
@@ -100,11 +103,20 @@ class PanierController {
 				listeLivres += "<input type=\"submit\" name=\"list\" id=\""
 				listeLivres += l.getTitre()
 				listeLivres += " class=\"list\" value=\"Retirer au panier\"/>"
-				listeLivres += "</form></td>"
-
+				listeLivres += "</form></td></tr>"	
 			}
-
+			listeLivres += "</table>"
+			
+			listeLivres += "<div><form action=\"/BiblioJ/reservation/enregistrement\" method=\"post\">"
+			listeLivres += "<input type=\"submit\" name=\"list\""
+			listeLivres += " value=\"Valider Reservation\"/>"
+			listeLivres += "</form>"
 			listeLivres += "</div>"
+			listeLivres += "</div>"
+			
+			listeLivres += "</div>"
+			
+			
 		} else {
 			listeLivres = "<div><p>Connectez-vous pour voir votre panier :)<p><br/><a href='/BiblioJ/panier/connexion'>Connexion</a></div>"
 		}
