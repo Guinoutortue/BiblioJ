@@ -29,6 +29,18 @@ class ReservationController {
 			println lv
 			Panier.findByUsername(session.user).removeFromPanier(lv).save(flush:true)
 		}
+		
+	}
+	
+	def listeLivreIndisponible() {
+		def panierlist = Panier.findByUsername(session.user).getMeslivres()
+		ArrayList<Livre> listeLivreIndispo =  new ArrayList<Livre>()
+		panierlist.each{ livre->
+			if(livre.nombreExemplairesDisponibles == 0) {
+				listeLivreIndispo.add(livre)
+			}
+		}
+		return listeLivre
 	}
 
 
