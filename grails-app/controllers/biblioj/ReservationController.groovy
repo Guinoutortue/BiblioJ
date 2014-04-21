@@ -5,10 +5,28 @@ import org.springframework.dao.DataIntegrityViolationException
 class ReservationController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	int coderes = 0
 
     def index() {
         redirect(action: "list", params: params)
     }
+	
+	def enregistrement() {
+		
+		List panierlist = Panier.findByUsername(session.user).getMeslivres()
+		Reservation r = new Reservation(code:coderes + 1,dateReservation: new Date()+ 3600*24).save()
+		panierlist.each { Livre livre ->
+			if(livre.nombreExemplairesDisponibles != 0){
+				livre.nombreExemplairesDisponibles--
+				livre.save()
+				Panier.findByUsername(session.user).removeFromMeslivres(livre)
+				r.addToLivres(livre).save()
+				}
+			}
+		coderes++
+		return r
+		}
+
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
