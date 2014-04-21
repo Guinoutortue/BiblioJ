@@ -12,20 +12,24 @@ class ReservationController {
     }
 	
 	def enregistrement() {
-		
-		List panierlist = Panier.findByUsername(session.user).getMeslivres()
-		Reservation r = new Reservation(code:coderes + 1,dateReservation: new Date()+ 3600*24).save()
-		panierlist.each { Livre livre ->
+		coderes++
+		def panierlist = Panier.findByUsername(session.user).getMeslivres()
+		Reservation r = new Reservation(code:coderes,dateReservation: new Date()+ 24).save(flush:true)
+		ArrayList<Livre> livresARetirerDuPanier = new ArrayList<Livre>()
+		panierlist.each { livre ->
 			if(livre.nombreExemplairesDisponibles != 0){
 				livre.nombreExemplairesDisponibles--
-				livre.save()
-				Panier.findByUsername(session.user).removeFromMeslivres(livre)
-				r.addToLivres(livre).save()
-				}
+				livre.save(flush:true)
+				livresARetirerDuPanier.add(livre)
+				Reservation.findByCode(coderes).addToLivres(livre).save(flush:true)
 			}
-		coderes++
-		return r
 		}
+		for(int i=0;i<livresARetirerDuPanier.size();i++) {
+			Livre lv = livresARetirerDuPanier.get(i)
+			println lv
+			Panier.findByUsername(session.user).removeFromPanier(lv).save(flush:true)
+		}
+	}
 
 
     def list(Integer max) {
