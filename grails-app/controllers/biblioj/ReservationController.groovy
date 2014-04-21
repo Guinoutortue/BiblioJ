@@ -27,8 +27,9 @@ class ReservationController {
 		for(int i=0;i<livresARetirerDuPanier.size();i++) {
 			Livre lv = livresARetirerDuPanier.get(i)
 			println lv
-			Panier.findByUsername(session.user).removeFromPanier(lv).save(flush:true)
+			Panier.findByUsername(session.user).removeFromMeslivres(lv).save(flush:true)
 		}
+		redirect(uri: "/")
 	}
 
 
