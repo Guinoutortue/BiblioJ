@@ -1,6 +1,7 @@
 package biblioj
 
 
+import java.util.List;
 import java.util.regex.Pattern.Neg;
 
 import org.springframework.dao.DataIntegrityViolationException
@@ -17,9 +18,9 @@ class LivreController {
 	}
 
 	def list(Integer max) {
-		
-		
-		params.max = Math.min(max ?: 10, 100)
+
+
+		params.max = Math.min(max ?: 5, 100)
 		[livreInstanceList: Livre.list(params), livreInstanceTotal: Livre.count()]
 	}
 
@@ -30,7 +31,7 @@ class LivreController {
 		def resultNom = new ArrayList<Livre>()
 		def resultType = new ArrayList<Livre>()
 		def result = new ArrayList<Livre>()
-		
+
 		if(!params["titre"].equals("") && params["titre"] !=  null) {
 			resultTitre = recupLivre.getByTitre("%"+ (params["titre"]) +"%")
 		}
@@ -43,7 +44,7 @@ class LivreController {
 			resultType = recupLivre.getByType("%" + params["typedoc"] + "%")
 		}
 
-		
+
 		if(resultNom.size()==0) {
 			if(resultTitre.size()==0) {
 				result=resultType
@@ -68,56 +69,33 @@ class LivreController {
 			result.retainAll(resultTitre)
 			result.retainAll(resultType)
 		}
+
 		
-		params.max = Math.min(max ?: 10, 100)
-		[livreInstanceList: result, livreInstanceTotal: result.size()]
+		
+		//def resrendering = getFilteredList(5, result.size(),result)
+
+		params.max = Math.min(max ?: 5, 100)
+		[livreInstanceList: result, livreInstanceTotal: result.size(), max: 5]
 	}
 
-	/*
-	 def formulaire() {
-	 if(params.offset == null) {
-	 params.offset = 0
-	 }
-	 recupLivre = new RecuperationLivreService()
-	 def result = new ArrayList<Livre>()
-	 if(!params["titre"].equals("") && params["titre"] !=  null) {
-	 if(result == null) {
-	 println(params["titre"])
-	 result = recupLivre.getByTitre("%"+ (params["titre"]) +"%")
-	 println(result)
-	 }
-	 else {
-	 result.addAll(recupLivre.getByTitre("%"+params["titre"]+"%"))
-	 println(result)
-	 }
-	 }
-	 if(!params["nom"].equals("") && params["nom"] !=  null) {
-	 if(result == null) {
-	 result = recupLivre.getByNom("%"+params["nom"]+"%")
-	 println(result)
-	 }
-	 else {
-	 result.addAll(recupLivre.getByNom("%"+params["nom"]+"%"))
-	 println(result)
-	 }
-	 }
-	 if(!params["typedoc"].equals("") && params["typedoc"] !=  null) {
-	 if(result == null) {
-	 result = recupLivre.getByType(params["typedoc"])
-	 println(result)
-	 }
-	 else {
-	 result.addAll(recupLivre.getByType(params["typedoc"]))
-	 println(result)
-	 }
-	 }
-	 println("\n\n\n")
-	 println(result)	
-	 redirect(action: "livrelist", params: params)
-	 return
-	 }
-	 */
+	/*public static List getFilteredList(int max, int offset, List names) {
+		max = Math.min(max ?: 25, 100)
+		if(offset && offset>0) offset= 0
 
+		//names = getNames() //Loads the complete list
+		int total = names.size()
+		int upperLimit = findUpperIndex(offset, max, total)
+		List filteredNames = names.getAt(offset..upperLimit)
+		return filteredNames
+	}
+
+	public static int findUpperIndex(int offset, int max, int total) {
+		max = offset + max - 1
+		if (max >= total) {
+			max -= max - total + 1
+		}
+		return max
+	}*/
 
 	def create() {
 		[livreInstance: new Livre(params)]

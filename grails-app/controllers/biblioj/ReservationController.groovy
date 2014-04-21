@@ -30,6 +30,7 @@ class ReservationController {
 			Panier.findByUsername(session.user).removeFromMeslivres(lv).save(flush:true)
 		}
 		
+		redirect(uri: "/")
 	}
 	
 	def listeLivreIndisponible() {
@@ -41,12 +42,11 @@ class ReservationController {
 			}
 		}
 		return listeLivre
-        redirect(uri: "/")
 	}
 
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 5, 100)
         [reservationInstanceList: Reservation.list(params), reservationInstanceTotal: Reservation.count()]
     }
 
