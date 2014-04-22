@@ -17,12 +17,10 @@ class PanierController {
 
 		flash.message ="login succeed"
 		session.user = params.username
-		println session.user
 		HashSet<Livre> hs = new HashSet<Livre>()
 		def panierres = Panier.findByUsername(session.user) ?: new Panier(
 				username: session.user
 				).save(flush: true)
-		println panierres
 		redirect(uri: '/')
 	}
 
@@ -32,17 +30,13 @@ class PanierController {
 	}
 
 	def ajouter() {
-		println params
 		def l = Livre.findByTitre(params.cache)
-		println l
 		Panier.findByUsername(session.user).addToMeslivres(l)
 		redirect(action: 'list', controller: 'Livre')
 	}
 
 	def retirer(){
-		println params.cache
 		def l = Livre.findByTitre(params.cache)
-		println l
 		Panier.findByUsername(session.user).removeFromMeslivres(l)
 		redirect(action: 'list', controller: 'Livre')
 	}
@@ -87,10 +81,10 @@ class PanierController {
 	}
 
 	def showLivres() {
-		def listeLivres
+		def listeLivres =""
 		if(session.user!=null) {
-			listeLivres += "<div>Vous-etes connecte en temps que : "+session.user+"</div><a href='/BiblioJ/panier/connexion'>Deconnexion</a>"
-			listeLivres += "<div id=\"list-livre\" >"
+			listeLivres += "<h1>Panier de "+session.user+"</h1>"
+			listeLivres += "<div id=\"list-livre\">"
 			listeLivres += "<table>"
 			Panier.findByUsername(session.user).getMeslivres().each { l ->
 				listeLivres += "<tr><td>"
@@ -102,14 +96,21 @@ class PanierController {
 				listeLivres += "\" id=\"cache\"/>"
 				listeLivres += "<input type=\"submit\" name=\"list\" id=\""
 				listeLivres += l.getTitre()
-				listeLivres += " class=\"list\" value=\"Retirer au panier\"/>"
+				listeLivres += " class=\"list\" value=\"Retirer du panier\"/>"
 				listeLivres += "</form></td></tr>"	
 			}
-			listeLivres += "</table>"
+			listeLivres += "</table><div>"
 			
-			listeLivres += "<div><form action=\"/BiblioJ/reservation/enregistrement\" method=\"post\">"
+			if(Panier.findByUsername(session.user).getMeslivres().size()>0)
+			{
+				listeLivres += "<form action=\"/BiblioJ/reservation/enregistrement\" method=\"post\" style=\"margin: 0px 10px 0px 10px; float:left\">"
+				listeLivres += "<input type=\"submit\" name=\"list\""
+				listeLivres += " value=\"Valider Reservation\" />"
+				listeLivres += "</form>"
+			}
+			listeLivres += "<form action=\"/BiblioJ/panier/connexion\" method=\"post\" style=\"margin: 0px 10px 0px 10px\">"
 			listeLivres += "<input type=\"submit\" name=\"list\""
-			listeLivres += " value=\"Valider Reservation\"/>"
+			listeLivres += " value=\"Deconnexion\"/>"
 			listeLivres += "</form>"
 			listeLivres += "</div>"
 			listeLivres += "</div>"
@@ -118,7 +119,11 @@ class PanierController {
 			
 			
 		} else {
-			listeLivres = "<div><p>Connectez-vous pour voir votre panier :)<p><br/><a href='/BiblioJ/panier/connexion'>Connexion</a></div>"
+			listeLivres += "<div><h1>Connectez-vous pour voir votre panier :)<h1><br/></div>"
+			listeLivres += "<form action=\"/BiblioJ/panier/connexion\" method=\"post\" style=\"margin: 0px 10px 0px 10px\">"
+			listeLivres += "<input type=\"submit\" name=\"list\""
+			listeLivres += " value=\"Connexion\"/>"
+			listeLivres += "</form>"
 		}
 
 		[message: listeLivres]
