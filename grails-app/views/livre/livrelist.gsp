@@ -31,7 +31,8 @@
 						<g:sortableColumn property="nombreExemplairesDisponibles" title="${message(code: 'livre.nombreExemplairesDisponibles.label', default: 'Nombre Exemplaires Disponibles')}" />
 					
 						<th><g:message code="livre.typeDocument.label" default="Type Document" /></th>
-					
+						
+						<g:if test="${session.user!=null}"><g:sortableColumn property="Action" title="Action" /></g:if>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,19 +47,20 @@
 					
 						<td>${fieldValue(bean: livreInstance, field: "typeDocument")}</td>
 						
-						<td><g:form url="[action:'ajouter',controller:'Panier']" >
-							<g:if test="${livreInstance.nombreExemplairesDisponibles > 0}">
-								<g:hiddenField name="cache" value="${livreInstance.titre}"/>
-								<g:submitButton name="list" id="${livreInstance.titre}" class="list" value="Ajouter au panier" />
-							</g:if>
-						</g:form></td>
-					
+						<g:if test="${session.user!=null}">
+							<td><g:form url="[action:'ajouter',controller:'Panier']" >
+								<g:if test="${livreInstance.nombreExemplairesDisponibles > 0}">
+									<g:hiddenField name="cache" value="${livreInstance.titre}"/>
+									<g:submitButton name="list" id="${livreInstance.titre}" class="list" value="Ajouter au panier" />
+								</g:if>
+							</g:form></td>
+						</g:if>
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${livreInstanceTotal}"  max="5"/>
+				<g:paginate total="${livreInstanceTotal}"  max="5" params="${[titre:params.titre, nom:params.nom, typedoc:params.typedoc]}"/>
 			</div>
 		</div>
 	</body>

@@ -34,7 +34,7 @@
 						
 						<th><g:message code="livre.typeDocument.label" default="Type Document" /></th>
 					
-						<g:sortableColumn property="Action" title="Action" />
+						<g:if test="${session.user!=null}"><g:sortableColumn property="Action" title="Action" /></g:if>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,13 +49,15 @@
 					
 						<td>${fieldValue(bean: livreInstance, field: "typeDocument")}</td>
 						
-						<td><g:form url="[action:'ajouter',controller:'Panier']" >
-							<g:if test="${livreInstance.nombreExemplairesDisponibles > 0}">
-								<g:hiddenField name="cache" value="${livreInstance.titre}"/>
-								<g:submitButton name="list" id="${livreInstance.titre}" class="list" value="Ajouter au panier" />
-							</g:if>
-						</g:form></td>
 						
+						<g:if test="${session.user!=null}">
+							<td><g:form url="[action:'ajouter',controller:'Panier']" >
+								<g:if test="${livreInstance.nombreExemplairesDisponibles > 0}">
+									<g:hiddenField name="cache" value="${livreInstance.titre}"/>
+									<g:submitButton name="list" id="${livreInstance.titre}" class="list" value="Ajouter au panier" />
+								</g:if>
+							</g:form></td>
+						</g:if>
 					</tr>
 				</g:each>
 				</tbody>

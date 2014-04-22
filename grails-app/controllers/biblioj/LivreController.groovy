@@ -72,30 +72,9 @@ class LivreController {
 
 		
 		
-		//def resrendering = getFilteredList(5, result.size(),result)
-
 		params.max = Math.min(max ?: 5, 100)
-		[livreInstanceList: result, livreInstanceTotal: result.size(), max: 5]
+		[livreInstanceList: result.subList(params.offset==null ? 0 : Math.max(params.offset.toInteger()-1,0) , params.offset==null ? Math.min(result.size(),5) : Math.min(params.offset.toInteger()+params.max-1,result.size())), livreInstanceTotal: result.size()]
 	}
-
-	/*public static List getFilteredList(int max, int offset, List names) {
-		max = Math.min(max ?: 25, 100)
-		if(offset && offset>0) offset= 0
-
-		//names = getNames() //Loads the complete list
-		int total = names.size()
-		int upperLimit = findUpperIndex(offset, max, total)
-		List filteredNames = names.getAt(offset..upperLimit)
-		return filteredNames
-	}
-
-	public static int findUpperIndex(int offset, int max, int total) {
-		max = offset + max - 1
-		if (max >= total) {
-			max -= max - total + 1
-		}
-		return max
-	}*/
 
 	def create() {
 		[livreInstance: new Livre(params)]
