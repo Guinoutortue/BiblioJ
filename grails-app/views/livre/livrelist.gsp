@@ -26,11 +26,11 @@
 					
 						<g:sortableColumn property="titre" title="${message(code: 'livre.titre.label', default: 'Titre')}" />
 					
-						<g:sortableColumn property="nombreExemplaires" title="${message(code: 'livre.nombreExemplaires.label', default: 'Nombre Exemplaires')}" />
+						<g:sortableColumn property="auteurs" title="${message(code: 'livre.auteurs.label', default: 'Auteur')}" />
+						
+						<g:sortableColumn property="typeDocuments" title="${message(code: 'livre.typeDocument.label', default: 'Type Document')}" />
 					
-						<g:sortableColumn property="nombreExemplairesDisponibles" title="${message(code: 'livre.nombreExemplairesDisponibles.label', default: 'Nombre Exemplaires Disponibles')}" />
-					
-						<th><g:message code="livre.typeDocument.label" default="Type Document" /></th>
+						<g:sortableColumn property="nombreExemplairesDisponibles" title="${message(code: 'livre.nombreExemplairesDisponibles.label', default: 'Disponibles')}" />
 						
 						<g:if test="${session.user!=null}"><g:sortableColumn property="Action" title="Action" /></g:if>
 					</tr>
@@ -41,11 +41,13 @@
 					
 						<td><g:link action="show" id="${livreInstance.id}">${fieldValue(bean: livreInstance, field: "titre")}</g:link></td>
 					
-						<td>${fieldValue(bean: livreInstance, field: "nombreExemplaires")}</td>
+						<td><g:each in="${livreInstance.auteurs}" status="j" var="auteur">
+                        	${fieldValue(bean: auteur, field: "nom")}
+                        </g:each></td>
+					
+						<td>${fieldValue(bean: livreInstance.getAt("typeDocument"), field: "intitule")}</td>
 					
 						<td>${fieldValue(bean: livreInstance, field: "nombreExemplairesDisponibles")}</td>
-					
-						<td>${fieldValue(bean: livreInstance, field: "typeDocument")}</td>
 						
 						<g:if test="${session.user!=null}">
 							<td><g:form url="[action:'ajouter',controller:'Panier']" >

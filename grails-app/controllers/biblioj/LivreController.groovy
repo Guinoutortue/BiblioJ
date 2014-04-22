@@ -71,7 +71,6 @@ class LivreController {
 		}
 
 		
-		
 		params.max = Math.min(max ?: 5, 100)
 		[livreInstanceList: result.subList(params.offset==null ? 0 : Math.max(params.offset.toInteger()-1,0) , params.offset==null ? Math.min(result.size(),5) : Math.min(params.offset.toInteger()+params.max-1,result.size())), livreInstanceTotal: result.size()]
 	}
