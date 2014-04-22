@@ -57,7 +57,7 @@ class PanierControllerTests {
         assert response.redirectedUrl == '/panier/list'
 
         populateValidParams(params)
-        def panier = new Panier(params)
+        def panier = new Panier(username:"jordan")
 
         assert panier.save() != null
 
@@ -75,7 +75,7 @@ class PanierControllerTests {
         assert response.redirectedUrl == '/panier/list'
 
         populateValidParams(params)
-        def panier = new Panier(params)
+        def panier = new Panier(username:"jordan")
 
         assert panier.save() != null
 
@@ -95,7 +95,7 @@ class PanierControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def panier = new Panier(params)
+        def panier = new Panier(username:"jordan") 
 
         assert panier.save() != null
 
@@ -139,7 +139,7 @@ class PanierControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def panier = new Panier(params)
+        def panier = new Panier(username:"jordan")
 
         assert panier.save() != null
         assert Panier.count() == 1

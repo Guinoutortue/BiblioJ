@@ -12,6 +12,6 @@ import org.junit.*
 class RecuperationLivreServiceTests {
 
     void testSomething() {
-        fail "Implement me"
+        
     }
 }

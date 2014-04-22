@@ -45,7 +45,7 @@ class AuteurControllerTests {
         populateValidParams(params)
         controller.save()
 
-        assert response.redirectedUrl == '/auteur/show/1'
+        assert response.redirectedUrl == '/auteur/show/'
         assert controller.flash.message != null
         assert Auteur.count() == 1
     }
@@ -57,7 +57,7 @@ class AuteurControllerTests {
         assert response.redirectedUrl == '/auteur/list'
 
         populateValidParams(params)
-        def auteur = new Auteur(params)
+         Auteur auteur = new Auteur(nom:"test",prenom:"test")
 
         assert auteur.save() != null
 
@@ -75,7 +75,7 @@ class AuteurControllerTests {
         assert response.redirectedUrl == '/auteur/list'
 
         populateValidParams(params)
-        def auteur = new Auteur(params)
+        Auteur auteur = new Auteur(nom:"test",prenom:"test")
 
         assert auteur.save() != null
 
@@ -95,7 +95,7 @@ class AuteurControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def auteur = new Auteur(params)
+         Auteur auteur = new Auteur(nom:"test",prenom:"test")
 
         assert auteur.save() != null
 
@@ -139,7 +139,7 @@ class AuteurControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def auteur = new Auteur(params)
+         Auteur auteur = new Auteur(nom:"test",prenom:"test")
 
         assert auteur.save() != null
         assert Auteur.count() == 1

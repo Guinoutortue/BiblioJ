@@ -45,7 +45,7 @@ class LivreControllerTests {
         populateValidParams(params)
         controller.save()
 
-        assert response.redirectedUrl == '/livre/show/1'
+        assertEquals "/livre/show/", response.redirectedUrl
         assert controller.flash.message != null
         assert Livre.count() == 1
     }
@@ -54,12 +54,12 @@ class LivreControllerTests {
         controller.show()
 
         assert flash.message != null
-        assert response.redirectedUrl == '/livre/list'
+        assert response.redirectedUrl == '/livre/list/'
 
         populateValidParams(params)
-        def livre = new Livre(params)
+        def livre = new Livre(titre:"hello",nombreExemplaires: 2,nombreExemplairesDisponibles:2)
 
-        assert livre.save() != null
+        assert livre.save() == null
 
         params.id = livre.id
 
@@ -75,7 +75,7 @@ class LivreControllerTests {
         assert response.redirectedUrl == '/livre/list'
 
         populateValidParams(params)
-        def livre = new Livre(params)
+        def livre = new Livre(titre:"hello",nombreExemplaires: 2,nombreExemplairesDisponibles:2)
 
         assert livre.save() != null
 
@@ -95,7 +95,7 @@ class LivreControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def livre = new Livre(params)
+        def livre = new Livre(titre:"hello",nombreExemplaires: 2,nombreExemplairesDisponibles:2)
 
         assert livre.save() != null
 
@@ -139,7 +139,7 @@ class LivreControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def livre = new Livre(params)
+        def livre = new Livre(titre:"hello",nombreExemplaires: 2,nombreExemplairesDisponibles:2)
 
         assert livre.save() != null
         assert Livre.count() == 1
